@@ -2,9 +2,13 @@ package com.example.stringcraft.modulos.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.stringcraft.modulos.Calculate.CalculateScreen
+import com.example.stringcraft.modulos.Calculate.CalculateScreenPrev
 import com.example.stringcraft.modulos.splash.Home.HomeScreen
 import com.example.stringcraft.modulos.splash.SplashScreen
 import kotlinx.coroutines.delay
@@ -23,12 +27,15 @@ fun NavigationRoot(){
              navController.popBackStack()
              navController.navigate(ScreenRoot.HomeScreen.route)
          }
-
          SplashScreen()
       }
 
       composable(ScreenRoot.HomeScreen.route){
-         HomeScreen()
+         HomeScreen(navController)
+      }
+
+      composable(ScreenRoot.CalculateScreen.route){
+         CalculateScreen()
       }
    }
 }
@@ -36,4 +43,5 @@ fun NavigationRoot(){
 sealed class ScreenRoot(val route: String){
    object SplashScreen : ScreenRoot("Splash")
    object HomeScreen : ScreenRoot("Home")
+   object CalculateScreen : ScreenRoot("Calculate")
 }
