@@ -2,13 +2,10 @@ package com.example.stringcraft.modulos.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.stringcraft.modulos.Calculate.CalculateScreen
-import com.example.stringcraft.modulos.Calculate.CalculateScreenPrev
 import com.example.stringcraft.modulos.splash.Home.HomeScreen
 import com.example.stringcraft.modulos.splash.SplashScreen
 import kotlinx.coroutines.delay
