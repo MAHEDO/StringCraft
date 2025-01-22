@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -21,9 +23,14 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,16 +39,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.stringcraft.R
+import com.example.stringcraft.modulos.navigation.ScreenRoot
 
 @Composable
-fun CalculateScreen() {
+fun CalculateScreen(navController: NavController) {
+    CalTopAppBar(navController)
     Box(
         Modifier
             .fillMaxSize()
@@ -56,14 +69,16 @@ fun Body(modifier: Modifier) {
     var scale by remember { mutableStateOf("") }
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(top = 68.dp),
         verticalArrangement = Arrangement.Top
     ) {
         Spacer(modifier = Modifier.padding(14.dp))
         Text(
             text = "Instrument Parameters",
             fontWeight = FontWeight.Bold,
-            style = TextStyle(fontSize = 28.sp),
+            style = TextStyle(fontSize = 24.sp),
             color = Color(0XFF2D172F)
         )
         Spacer(modifier = Modifier.padding(14.dp))
@@ -134,7 +149,7 @@ fun NumberFretsMenu() {
                 .fillMaxWidth(),
             value = selectedOptionText,
             onValueChange = { selectedOptionText = it },
-            placeholder = { Text("138") },
+            placeholder = { Text("18") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
                 focusedContainerColor = Color.White,
@@ -181,7 +196,7 @@ fun getOptions(titles: List<String>, selectedTitle: String?, onSelectionChange:(
 
 @Composable
 fun ExclusiveCheckboxList() {
-    val options = listOf("Guitar (650mm)", "Requinto (580mm)", "Violin(330mm)")
+    val options = listOf("Guitar (650mm)", stringResource(R.string.option_check_two), "String Bass(330mm)")
     var selectedTitle by rememberSaveable { mutableStateOf<String?>(null) }
 
     val checkInfoList = getOptions(
@@ -232,9 +247,38 @@ fun BtnCalculate() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CalTopAppBar(navController: NavController){
+    TopAppBar(
+        title = { Text(text = "Calculate", style = TextStyle(fontSize = 18.sp)) },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = Color.White,
+            titleContentColor = Color(0XFF2D172F)
+        ),
+        navigationIcon= {
+            IconButton( onClick = {
+                navController.navigate(ScreenRoot.HomeScreen.route)
+            }, colors = IconButtonDefaults.iconButtonColors(
+                containerColor = Color.White
+            )) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back"
+                )
+            }
+        },
+        modifier = Modifier.shadow(
+            elevation = 24.dp,
+            spotColor = Color(0XFF2c2c2c)
+        )
+    )
+}
 
 @Preview
 @Composable
 fun CalculateScreenPrev() {
-    CalculateScreen()
+    CalculateScreen(
+        navController = TODO()
+    )
 }

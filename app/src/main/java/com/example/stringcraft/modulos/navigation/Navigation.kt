@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.stringcraft.modulos.Calculate.CalculateScreen
+import com.example.stringcraft.modulos.Help.HelpScreen
 import com.example.stringcraft.modulos.splash.Home.HomeScreen
 import com.example.stringcraft.modulos.splash.SplashScreen
 import kotlinx.coroutines.delay
@@ -32,7 +33,11 @@ fun NavigationRoot(){
       }
 
       composable(ScreenRoot.CalculateScreen.route){
-         CalculateScreen()
+         CalculateScreen(navController)
+      }
+
+      composable(ScreenRoot.HelpScreen.route){
+         HelpScreen(navController)
       }
    }
 }
@@ -41,4 +46,5 @@ sealed class ScreenRoot(val route: String){
    object SplashScreen : ScreenRoot("Splash")
    object HomeScreen : ScreenRoot("Home")
    object CalculateScreen : ScreenRoot("Calculate")
+   object HelpScreen: ScreenRoot("Help")
 }
