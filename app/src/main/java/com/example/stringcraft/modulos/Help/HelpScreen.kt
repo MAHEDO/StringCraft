@@ -17,18 +17,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDefaults.contentColor
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +32,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -56,7 +50,7 @@ import com.example.stringcraft.modulos.navigation.ScreenRoot
 @Composable
 fun HelpScreen(navController: NavController) {
         MyTopAppBar(navController)
-        Spacer(modifier = Modifier.padding(18.dp))
+        Spacer(modifier = Modifier.padding(12.dp))
         Box(
             Modifier
                 .fillMaxSize()
@@ -71,7 +65,7 @@ fun BodyHelp(modifier: Modifier) {
     Column(
         modifier
             .fillMaxSize()
-            .padding(top = 32.dp),
+            .padding(top = 24.dp),
         verticalArrangement = Arrangement.Top
     ) {
         Spacer(modifier = Modifier.padding(14.dp))
@@ -85,7 +79,7 @@ fun BodyHelp(modifier: Modifier) {
 
 @Composable
 fun TitleScreen(){
-    Spacer(modifier = Modifier.padding(18.dp))
+    Spacer(modifier = Modifier.padding(12.dp))
     Text(
         text = stringResource(R.string.title_understanding),
         fontWeight = FontWeight.Bold,
@@ -230,7 +224,5 @@ fun MyTopAppBar(navController: NavController){
 @Preview
 @Composable
 fun HelpScreenPrev(){
-    HelpScreen(
-        navController = TODO()
-    )
+    //HelpScreen(navController = TODO())
 }

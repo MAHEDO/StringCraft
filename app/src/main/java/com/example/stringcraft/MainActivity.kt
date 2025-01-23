@@ -20,7 +20,6 @@ import com.example.stringcraft.ui.theme.StringCraftTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
            NavigationRoot()
         }

@@ -2,7 +2,6 @@ package com.example.stringcraft.modulos.splash.Home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -74,7 +73,7 @@ fun HomeScreen(navController: NavController){
                  .padding(14.dp),
              enabled = true,
              contentPadding = PaddingValues(16.dp),
-             colors = ButtonDefaults.buttonColors(containerColor = Color(red = 45, green = 23, blue= 47))
+             colors = ButtonDefaults.buttonColors(containerColor = Color(0XFF2D172F))
              ) {
              Text(text = "Calculate")
          }
@@ -91,8 +90,33 @@ fun HomeScreen(navController: NavController){
              contentPadding = PaddingValues(16.dp),
              colors = ButtonDefaults.buttonColors(containerColor = Color.White)
              ) {
-            Text(text = "Help/Information", color = Color.Black)
+            Text(text = "Help / Information", color = Color.Black)
          }
+
+        Button(onClick = {
+            navController.navigate(ScreenRoot.AboutScreen.route)
+        },
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),
+            enabled = true,
+            border = BorderStroke(width = 1.dp, color = Color.Black),
+            contentPadding = PaddingValues(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.White)
+        ) {
+            Text(text = "About", color = Color.Black)
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        //version name
+        Text(
+            text = "V1.0.0",
+            fontWeight = FontWeight.SemiBold,
+            style = TextStyle(fontSize = 14.sp),
+            color = Color(0XFF2D172F)
+        )
     }
 }
 
@@ -117,7 +141,5 @@ fun LogoTwo(){
 @Preview
 @Composable
 fun HomeScreenPre(){
-    HomeScreen(
-        navController = TODO()
-    )
+    //HomeScreen(navController = TODO())
 }

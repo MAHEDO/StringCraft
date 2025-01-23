@@ -60,18 +60,19 @@ fun CalculateScreen(navController: NavController) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Body(Modifier.align(Alignment.Center))
+        Body(Modifier.align(Alignment.Center), navController)
     }
 }
 
 @Composable
-fun Body(modifier: Modifier) {
+fun Body(modifier: Modifier, navController: NavController) {
     var scale by remember { mutableStateOf("") }
+    var selectedFrets by remember { mutableStateOf("18") } // valor por defecto
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = 68.dp),
+            .padding(top = 42.dp),
         verticalArrangement = Arrangement.Top
     ) {
         Spacer(modifier = Modifier.padding(14.dp))
@@ -98,17 +99,17 @@ fun Body(modifier: Modifier) {
             color = Color(0XFF030303)
         )
         Spacer(modifier = Modifier.padding(6.dp))
-        NumberFretsMenu()
+        NumberFretsMenu{ selectedFrets = it }
         Spacer(modifier = Modifier.padding(18.dp))
-        Text(
+        /*Text(
             text = "Predefined Instruments Options",
             fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 14.sp),
             color = Color(0XFF030303)
         )
         ExclusiveCheckboxList()
-        Spacer(modifier = Modifier.padding(18.dp))
-        BtnCalculate()
+        Spacer(modifier = Modifier.padding(18.dp))*/
+        BtnCalculate(navController, scale, selectedFrets)
     }
 }
 
@@ -134,10 +135,10 @@ fun ScaleText(scale: String, onTextChanged: (String) -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NumberFretsMenu() {
+fun NumberFretsMenu(onFretsSelected: (String) -> Unit) {
     val options = listOf("12", "16", "18", "19", "20", "22", "24")
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf("") }
+    var selectedOptionText by remember { mutableStateOf("18") }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -148,7 +149,7 @@ fun NumberFretsMenu() {
                 .menuAnchor()
                 .fillMaxWidth(),
             value = selectedOptionText,
-            onValueChange = { selectedOptionText = it },
+            onValueChange = { },
             placeholder = { Text("18") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
@@ -170,6 +171,7 @@ fun NumberFretsMenu() {
                     text = { Text(selectedOption) },
                     onClick = {
                         selectedOptionText = selectedOption
+                        onFretsSelected(selectedOption)
                         expanded = false
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
@@ -228,19 +230,21 @@ fun CheckBoxCombo(checkInfo: CheckInfo) {
 }
 
 @Composable
-fun BtnCalculate() {
+fun BtnCalculate(navController: NavController, scale: String, frets: String) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            if (scale.isNotBlank() && frets.isNotBlank()){
+               navController.navigate(ScreenRoot.ResultsScreen.createRoute(scale, frets))
+            } else {
+                //Maneja el caso de datos vacios
+            }
+        },
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier.fillMaxWidth(),
         enabled = true,
         contentPadding = PaddingValues(16.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(
-                red = 45,
-                green = 23,
-                blue = 47
-            )
+            containerColor = Color(0XFF2D172F)
         )
     ) {
         Text(text = "Calculate")
@@ -278,7 +282,5 @@ fun CalTopAppBar(navController: NavController){
 @Preview
 @Composable
 fun CalculateScreenPrev() {
-    CalculateScreen(
-        navController = TODO()
-    )
+    //CalculateScreen(navController = TODO())
 }
