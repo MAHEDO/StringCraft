@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Home Screen-->
+    <string name="app_name">StringCraft</string>
+    <string name="slogan_name_app">Artesania con Cuerdas</string>
+    <string name="btn_about">Acerca de</string>
+    <string name="btn_text_helpinformation">Ayuda / Información</string>
+
+    <!--Calculate Screen-->
+    <string name="topbar_title_calculate">Calcular</string>
+    <string name="title_instrument_parameters">Parametros del Instrumento</string>
+    <string name="title_scale_length">Longitud de Escala</string>
+    <string name="title_number_frets">Numero de Trastes</string>
+    <string name="placeholder_enter_scale">Escribe longitud de la escala(mm/pulgadas)</string>
+    <string name="option_check_first">Guitarra (650mm)</string>
+    <string name="option_check_two">Requinto (580mm)</string>
+    <string name="option_check_three">Bajo(330mm)</string>
+    <string name="btn_calculate">Calcular trastes</string>
+
+    <!--Help Screen-->
+    <string name="topbar_title_help">Ayuda / Informacion</string>
+    <string name="title_understanding">Comprender el cálculo de los trastes</string>
+    <string name="desciption_images">Las ilustraciones ayudan a aclarar los términos CEJA y PUENTE en diferentes instrumentos de cuerda, esenciales para comprender su construcción y diseño.</string>
+    <string name="title_illustration">Ilustración del diapasón</string>
+    <string name="description_app">El cálculo de los trastes implica mediciones precisas para garantizar que cada nota esté afinada en toda la cuerda. Nuestra aplicación utiliza un algoritmo sofisticado para calcular estas posiciones, lo que permite diseños personalizados manteniendo la precisión musical.</string>
+    <string name="title_additional">Recursos adicionales</string>
+    <string name="link_manual">Manual de Luthier para principiantes.</string>
+
+    <!--Results Screen-->
+    <string name="topbar_title_results">Resultados</string>
+    <string name="title_calculation_results">Resultados del cálculo</string>
+    <string name="btn_export">Exportar Archivo</string>
+    <string name="column_name_one">Número de Trastes</string>
+    <string name="column_name_two">Distancia desde Ceja</string>
+    <string name="column_name_three">Distancia entre Trastes</string>
+
+    <!--About Screen-->
+    <string name="topbar_title_about">Acerca de Nosotos</string>
+    <string name="title_project_description">Descripción del proyecto</string>
+    <string name="project_description">
+        Esta aplicación ha sido desarrollada para luthiers, músicos y aficionados que buscan precisión en el cálculo de medidas de trastes para instrumentos de cuerda como
+        guitarras, requintos y contrabajos. Nuestro objetivo es facilitar el diseño y construcción de instrumentos personalizados con una herramienta práctica y confiable.
+    </string>
+    <string name="title_history_or_motivation">Historia o Motivación</string>
+    <string name="history_description">
+        Inspirándonos en nuestra pasión por la música y la lutería, hemos creado una aplicación que combina tradición y tecnología para apoyar a creadores de todo el mundo.
+    </string>
+
+    <string name="develop_description">
+        Desarrollado por Aaron Hdez Dguez. Gracias a todos los luthiers y músicos que inspiraron este proyecto.
+    </string>
+
+</resources>

@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,7 +56,7 @@ fun HomeScreen(navController: NavController){
             )
 
             Text(
-                text = "StringCraft",
+                text = stringResource(R.string.slogan_name_app),
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontSize = 24.sp),
                 color = Color(0XFF2D172F)
@@ -75,7 +76,7 @@ fun HomeScreen(navController: NavController){
              contentPadding = PaddingValues(16.dp),
              colors = ButtonDefaults.buttonColors(containerColor = Color(0XFF2D172F))
              ) {
-             Text(text = "Calculate")
+             Text(text = stringResource(R.string.btn_calculate))
          }
 
          Button(onClick = {
@@ -90,7 +91,7 @@ fun HomeScreen(navController: NavController){
              contentPadding = PaddingValues(16.dp),
              colors = ButtonDefaults.buttonColors(containerColor = Color.White)
              ) {
-            Text(text = "Help / Information", color = Color.Black)
+            Text(text = stringResource(R.string.btn_text_helpinformation), color = Color.Black)
          }
 
         Button(onClick = {
@@ -105,14 +106,14 @@ fun HomeScreen(navController: NavController){
             contentPadding = PaddingValues(16.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.White)
         ) {
-            Text(text = "About", color = Color.Black)
+            Text(text = stringResource(R.string.btn_about), color = Color.Black)
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
         //version name
         Text(
-            text = "V1.0.0",
+            text = "V1.0.1",
             fontWeight = FontWeight.SemiBold,
             style = TextStyle(fontSize = 14.sp),
             color = Color(0XFF2D172F)

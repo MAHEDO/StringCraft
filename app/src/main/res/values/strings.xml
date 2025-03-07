@@ -1,19 +1,46 @@
 <resources>
+    <!--Home Screen-->
     <string name="app_name">StringCraft</string>
-    <string name="desciption_images">The illustrations help clarify the terms NUT and Bridge on different string instruments, essential for understanding their construction and design.</string>
-    <string name="description_app">The calculation of trets involves precise measurements to ensure each note is in tune across the string. Our app uses a sophisticated algorithm to calculate these positions, allowing custom designs while maintaining musical accuary.</string>
+    <string name="slogan_name_app">StringCraft</string>
+    <string name="btn_about">About</string>
+    <string name="btn_text_helpinformation">Help / Information</string>
+
+    <!--Calculate Screen-->
+    <string name="topbar_title_calculate">Calculate</string>
+    <string name="title_instrument_parameters">Instrument Parameters</string>
+    <string name="title_scale_length">Scale Length</string>
+    <string name="title_number_frets">Number Frets</string>
+    <string name="placeholder_enter_scale">Enter scale length (mm/inches)</string>
+    <string name="option_check_first">Guitar (650mm)</string>
+    <string name="option_check_two">String Requinto (580mm)</string>
+    <string name="option_check_three">String Bass(330mm)</string>
+    <string name="btn_calculate">Calculate</string>
+
+    <!--Help Screen-->
+    <string name="topbar_title_help">Help / Information</string>
     <string name="title_understanding">Understanding the Frets Calculation</string>
+    <string name="desciption_images">The illustrations help clarify the terms NUT and Bridge on different string instruments, essential for understanding their construction and design.</string>
     <string name="title_illustration">Illustration the Fingerboard</string>
+    <string name="description_app">The calculation of trets involves precise measurements to ensure each note is in tune across the string. Our app uses a sophisticated algorithm to calculate these positions, allowing custom designs while maintaining musical accuary.</string>
     <string name="title_additional">Additional Resources</string>
     <string name="link_manual">Luthiery Manual for Beginners</string>
-    <string name="option_check_two">String Requito (580mm)</string>
+
+    <!--Results Screen-->
+    <string name="topbar_title_results">Results</string>
+    <string name="title_calculation_results">Calculation Results</string>
+    <string name="btn_export">Export File</string>
+    <string name="column_name_one">Fret Number</string>
+    <string name="column_name_two">Distance from Nut</string>
+    <string name="column_name_three">Distance Between Frets</string>
 
     <!--About Screen-->
+    <string name="topbar_title_about">About Us</string>
+    <string name="title_project_description">Project Description</string>
     <string name="project_description">
         This app has been developep for luthiers, musicians and hobbyists looking for precision when calculating fret measurements for stringed instruments such
         as guitars, requintos, and string bass. Our goal is to facilitate the design and construction of custom instruments with a practical and reliable tool.
     </string>
-
+    <string name="title_history_or_motivation">History or Motivation</string>
     <string name="history_description">
         Inspired by our passion for music and lutherie, we have created an app that combines tradition and technology to support creators around the world.
     </string>
@@ -21,5 +48,4 @@
     <string name="develop_description">
         Develop by Aaron Hdez Dguez. Thanks to all the luthiers and musicians who inspired this project.
     </string>
-
 </resources>

@@ -16,10 +16,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.stringcraft.modulos.navigation.NavigationRoot
 import com.example.stringcraft.ui.theme.StringCraftTheme
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this)
         setContent {
            NavigationRoot()
         }

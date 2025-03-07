@@ -2,7 +2,6 @@ package com.example.stringcraft.modulos.About
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -34,14 +31,17 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.stringcraft.R
 import com.example.stringcraft.modulos.navigation.ScreenRoot
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 
 @Composable
 fun AboutScreen(navController: NavController) {
@@ -67,6 +67,7 @@ fun BodyAbout(modifier: Modifier) {
        HistoryDescription()
        ImageBackground()
        DevelopDescription()
+       AdMobBanner(adUnit = "ca-app-pub-3940256099942544/9214589741")
     }
 }
 
@@ -74,7 +75,7 @@ fun BodyAbout(modifier: Modifier) {
 fun ProjectDescription(){
     Spacer(modifier = Modifier.padding(14.dp))
     Text(
-        text = "Project Description",
+        text = stringResource(R.string.title_project_description),
         fontWeight = FontWeight.Bold,
         style = TextStyle(fontSize = 20.sp),
         color = Color(0XFF2D172F)
@@ -92,7 +93,7 @@ fun ProjectDescription(){
 fun HistoryDescription(){
     Spacer(modifier = Modifier.padding(14.dp))
     Text(
-        text = "History or Motivation",
+        text = stringResource(R.string.title_history_or_motivation),
         fontWeight = FontWeight.Bold,
         style = TextStyle(fontSize = 20.sp),
         color = Color(0XFF2D172F)
@@ -131,13 +132,14 @@ fun DevelopDescription(){
         style = TextStyle(fontSize = 14.sp),
         color = Color(0XFF342e23)
     )
+    Spacer(modifier = Modifier.padding(14.dp))
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutTopAppBar(navController: NavController){
     TopAppBar(
-        title = { Text(text = "About Us", style = TextStyle(fontSize = 18.sp)) },
+        title = { Text(text = stringResource(R.string.topbar_title_about), style = TextStyle(fontSize = 18.sp)) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = Color(0XFF2D172F),
             titleContentColor = Color.White
@@ -160,6 +162,22 @@ fun AboutTopAppBar(navController: NavController){
             spotColor = Color(0XFF2c2c2c)
         )
     )
+}
+
+@Composable
+fun AdMobBanner(adUnit: String){
+   AndroidView(
+       modifier = Modifier
+           .fillMaxWidth()
+           .height(80.dp),
+       factory = { context ->
+           AdView(context).apply {
+               setAdSize(AdSize.BANNER)
+               adUnitId = adUnit
+               loadAd(AdRequest.Builder().build())
+           }
+       }
+   )
 }
 
 @Preview

@@ -1,7 +1,6 @@
 package com.example.stringcraft.modulos.Calculate
 
 import android.content.Context
-import android.icu.number.Scale
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -36,12 +37,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.stringcraft.R
 import com.example.stringcraft.modulos.navigation.ScreenRoot
 import java.io.File
 import java.io.FileOutputStream
@@ -51,64 +54,60 @@ import kotlin.text.*
 fun ResultsScreen(navController: NavController, scale: String, frets: String) {
     ResultTopAppBar(navController)
     Box(
-        Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Scale Length: $scale\nNumber of Frets: $frets",
-            style = TextStyle(fontSize = 18.sp, color = Color.Transparent)
-        )
-        ResultHelp(Modifier.align(Alignment.Center),scale, frets)
-    }
-}
-
-@Composable
-fun ResultHelp(modifier: Modifier, scale: String, frets: String) {
-    // Estado para controlar el loading
-    val isLoading = remember { mutableStateOf(true) }
-    // Estado para almacenar la información de los trastes
-    val fretData = remember { mutableStateOf<List<FretsInfo>>(emptyList()) }
-
-    // Simular el tiempo de carga de 5 segundos
-    LaunchedEffect(Unit) {
-        kotlinx.coroutines.delay(3000)
-        // Calcular los datos después del delay
-        fretData.value = calculateInformationFromFrets(scale.toDouble(), frets.toInt())
-        // Cambiar el estado de carga
-        isLoading.value = false
-    }
-
-    Column(
-        modifier
-            .fillMaxSize()
-            .padding(start = 18.dp, top = 72.dp, end = 18.dp),
-        verticalArrangement = Arrangement.Top
-    ) {
-        Spacer(modifier = Modifier.padding(top = 16.dp))
-        Text(
-            text = "Calculation Results",
-            fontWeight = FontWeight.Bold,
-            style = TextStyle(fontSize = 24.sp),
-            color = Color(0XFF2D172F)
-        )
-        Spacer(modifier = Modifier.padding(14.dp))
-
-        // Mostrar el indicador de carga o la tabla
-        if (isLoading.value) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(16.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(start = 12.dp, top = 52.dp, end = 12.dp)
+        ) {
+            Text(
+                text = "Scale Length: $scale\nNumber of Frets: $frets",
+                style = TextStyle(fontSize = 18.sp, color = Color.Transparent)
             )
-        } else {
-            TableOfFrets(fretData.value)
-        }
 
-        Spacer(modifier = Modifier.padding(14.dp))
-        Row (
-            modifier = modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            BtnExport(modifier = Modifier.weight(1f).padding(8.dp), scale, frets)
+            // Estado para controlar el loading
+            val isLoading = remember { mutableStateOf(true) }
+            // Estado para almacenar la información de los trastes
+            val fretData = remember { mutableStateOf<List<FretsInfo>>(emptyList()) }
+
+            // Simular el tiempo de carga de 3 segundos
+            LaunchedEffect(Unit) {
+                kotlinx.coroutines.delay(3000)
+                fretData.value = calculateInformationFromFrets(scale.toDouble(), frets.toInt())
+                isLoading.value = false
+            }
+            Text(
+                text = stringResource(R.string.title_calculation_results),
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontSize = 24.sp),
+                color = Color(0XFF2D172F)
+            )
+            Spacer(modifier = Modifier.padding(14.dp))
+
+            // Mostrar el indicador de carga o la tabla
+            if (isLoading.value) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(16.dp)
+                )
+            } else {
+                TableOfFrets(fretData.value)
+            }
+
+            Spacer(modifier = Modifier.padding(14.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                BtnExport(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp), scale, frets
+                )
+            }
         }
     }
 }
@@ -118,23 +117,25 @@ fun TableOfFrets(value: List<FretsInfo>) {
         Column(modifier = Modifier.fillMaxWidth()) {
             // Cabecera de la tabla
             Row(
-                Modifier.fillMaxWidth().padding(8.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Fret Number",
+                    text = stringResource(R.string.column_name_one),
                     style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 14.sp),
                     color = Color(0XFF030303),
                     modifier = Modifier.weight(1f)
                 )
                 Text(
-                    text = "Distance from Nut",
+                    text = stringResource(R.string.column_name_two),
                     style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 14.sp),
                     color = Color(0XFF030303),
                     modifier = Modifier.weight(1f)
                 )
                 Text(
-                    text = "Distance Between Frets",
+                    text = stringResource(R.string.column_name_three),
                     style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 14.sp),
                     color = Color(0XFF030303),
                     modifier = Modifier.weight(1f)
@@ -145,7 +146,8 @@ fun TableOfFrets(value: List<FretsInfo>) {
             // Contenido de la tabla
             value.forEachIndexed { index, fret ->
                 Row(
-                    Modifier.fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
                         .padding(vertical = 4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -194,7 +196,7 @@ fun BtnExport(modifier: Modifier, scale: String, frets: String){
                 blue = 47)
         )
     ) {
-        Text(text = "Export File", color = Color.White)
+        Text(text = stringResource(R.string.btn_export), color = Color.White)
     }
 }
 
@@ -250,7 +252,7 @@ fun exportFile(context: Context, data: List<FretsInfo>){
 @Composable
 fun ResultTopAppBar(navController: NavController){
     TopAppBar(
-        title = { Text(text = "Results", style = TextStyle(fontSize = 18.sp)) },
+        title = { Text(text = stringResource(R.string.topbar_title_results), style = TextStyle(fontSize = 18.sp)) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = Color.White,
             titleContentColor = Color(0XFF2D172F)

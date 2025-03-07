@@ -9,14 +9,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -26,6 +29,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -45,11 +49,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.stringcraft.R
+import com.example.stringcraft.modulos.MinimalDialog
 import com.example.stringcraft.modulos.navigation.ScreenRoot
 
 @Composable
@@ -77,14 +84,14 @@ fun Body(modifier: Modifier, navController: NavController) {
     ) {
         Spacer(modifier = Modifier.padding(14.dp))
         Text(
-            text = "Instrument Parameters",
+            text = stringResource(R.string.title_instrument_parameters),
             fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 24.sp),
             color = Color(0XFF2D172F)
         )
         Spacer(modifier = Modifier.padding(14.dp))
         Text(
-            text = "Scale Length",
+            text = stringResource(R.string.title_scale_length),
             fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 14.sp),
             color = Color(0xFF030303)
@@ -93,7 +100,7 @@ fun Body(modifier: Modifier, navController: NavController) {
         ScaleText(scale) { scale = it }
         Spacer(modifier = Modifier.padding(18.dp))
         Text(
-            text = "Number Frets",
+            text = stringResource(R.string.title_number_frets),
             fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 14.sp),
             color = Color(0XFF030303)
@@ -101,14 +108,15 @@ fun Body(modifier: Modifier, navController: NavController) {
         Spacer(modifier = Modifier.padding(6.dp))
         NumberFretsMenu{ selectedFrets = it }
         Spacer(modifier = Modifier.padding(18.dp))
+        //SwitchViewOptions()
         /*Text(
             text = "Predefined Instruments Options",
             fontWeight = FontWeight.Bold,
             style = TextStyle(fontSize = 14.sp),
             color = Color(0XFF030303)
         )
-        ExclusiveCheckboxList()
-        Spacer(modifier = Modifier.padding(18.dp))*/
+        ExclusiveCheckboxList()*/
+        Spacer(modifier = Modifier.padding(18.dp))
         BtnCalculate(navController, scale, selectedFrets)
     }
 }
@@ -119,7 +127,7 @@ fun ScaleText(scale: String, onTextChanged: (String) -> Unit) {
         value = scale,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Enter scale length (mm/inches)") },
+        placeholder = { Text(text = stringResource(R.string.placeholder_enter_scale)) },
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -197,8 +205,23 @@ fun getOptions(titles: List<String>, selectedTitle: String?, onSelectionChange:(
 }
 
 @Composable
+fun SwitchViewOptions() {
+    var state by remember { mutableStateOf(false) }
+
+    Switch(
+        checked = state,
+        onCheckedChange = { state = !state },
+        enabled = false
+    )
+}
+
+@Composable
 fun ExclusiveCheckboxList() {
-    val options = listOf("Guitar (650mm)", stringResource(R.string.option_check_two), "String Bass(330mm)")
+    val options = listOf(stringResource(R.string.option_check_first), stringResource(R.string.option_check_two),
+        stringResource(
+            R.string.option_check_three
+        )
+    )
     var selectedTitle by rememberSaveable { mutableStateOf<String?>(null) }
 
     val checkInfoList = getOptions(
@@ -231,12 +254,14 @@ fun CheckBoxCombo(checkInfo: CheckInfo) {
 
 @Composable
 fun BtnCalculate(navController: NavController, scale: String, frets: String) {
+    var openMinimalDialog by remember { mutableStateOf(false) }
+
     Button(
         onClick = {
             if (scale.isNotBlank() && frets.isNotBlank()){
                navController.navigate(ScreenRoot.ResultsScreen.createRoute(scale, frets))
             } else {
-                //Maneja el caso de datos vacios
+                openMinimalDialog = true
             }
         },
         shape = RoundedCornerShape(12.dp),
@@ -247,7 +272,11 @@ fun BtnCalculate(navController: NavController, scale: String, frets: String) {
             containerColor = Color(0XFF2D172F)
         )
     ) {
-        Text(text = "Calculate")
+        Text(text = stringResource(R.string.btn_calculate))
+    }
+    // Mostrar el diálogo si la condición es verdadera
+    if (openMinimalDialog) {
+        MinimalDialog(onDismissRequest = { openMinimalDialog = false })
     }
 }
 
@@ -255,7 +284,7 @@ fun BtnCalculate(navController: NavController, scale: String, frets: String) {
 @Composable
 fun CalTopAppBar(navController: NavController){
     TopAppBar(
-        title = { Text(text = "Calculate", style = TextStyle(fontSize = 18.sp)) },
+        title = { Text(text = stringResource(R.string.topbar_title_calculate), style = TextStyle(fontSize = 18.sp)) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = Color.White,
             titleContentColor = Color(0XFF2D172F)

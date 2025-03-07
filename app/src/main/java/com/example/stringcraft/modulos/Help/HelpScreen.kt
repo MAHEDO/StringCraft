@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -43,9 +44,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.stringcraft.R
 import com.example.stringcraft.modulos.navigation.ScreenRoot
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 
 @Composable
 fun HelpScreen(navController: NavController) {
@@ -74,6 +79,8 @@ fun BodyHelp(modifier: Modifier) {
         ContentIllustration()
         Spacer(modifier = Modifier.padding(14.dp))
         AdditionalResources()
+        Spacer(modifier = Modifier.padding(14.dp))
+        AdMobBanner(adUnit = "ca-app-pub-3940256099942544/9214589741")
     }
 }
 
@@ -198,7 +205,7 @@ fun HyperlinkText(link: String) {
 @Composable
 fun MyTopAppBar(navController: NavController){
     TopAppBar(
-        title = { Text(text = "Help / Information", style = TextStyle(fontSize = 18.sp)) },
+        title = { Text(text = stringResource(R.string.topbar_title_help), style = TextStyle(fontSize = 18.sp)) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = Color.White,
             titleContentColor = Color(0XFF2D172F)
@@ -218,6 +225,22 @@ fun MyTopAppBar(navController: NavController){
             elevation = 24.dp,
             spotColor = Color(0XFF2c2c2c)
         )
+    )
+}
+
+@Composable
+fun AdMobBanner(adUnit: String){
+    AndroidView(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp),
+        factory = { context ->
+            AdView(context).apply {
+                setAdSize(AdSize.BANNER)
+                adUnitId = adUnit
+                loadAd(AdRequest.Builder().build())
+            }
+        }
     )
 }
 
